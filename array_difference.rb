@@ -1,5 +1,8 @@
+################################################
+# $> ruby -v
+# ruby 2.1.1p76 (2014-02-24 revision 45161) [x86_64-darwin12.0]
+################################################
 require 'benchmark'
-require 'set'
 
 def compare_1 arr_1, arr_2
     output = []
@@ -24,6 +27,7 @@ def compare_2 arr_1, arr_2
     out
 end
 
+require 'set'
 def compare_3 arr_1, arr_2
   temp = Set.new arr_2
   arr_1.reject { |e| temp.include? e }
@@ -45,7 +49,7 @@ Benchmark.bmbm(11) do |x|
   x.report("natif:")     {natif(a1, a2)}
 end
 ################################################
-# $> ruby test.rb
+# $> ruby array_difference.rb
 # Rehearsal -----------------------------------------------
 # compare_1:    0.030000   0.000000   0.030000 (  0.031663)
 # compare_2:   71.300000   0.040000  71.340000 ( 71.436027)

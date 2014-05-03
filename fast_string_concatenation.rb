@@ -2,50 +2,48 @@
 # $> ruby -v
 # ruby 2.1.1p76 (2014-02-24 revision 45161) [x86_64-darwin12.0]
 ################################################
+require 'benchmark'
 
-def concat_x_millions x
+def plus num
   val = ""
-  (1000000*x).times do |i|
+  num.times do |i|
     val += i.to_s
   end
+  val
 end
-################################################
-# $> time ruby test.rb;time ruby test.rb;time ruby test.rb;time ruby test.rb;
-# ^C
-# ruby test.rb  362,20s user 756,11s system 98% cpu 18:49,69 total
-# I shutted it down because it was too long,
-# it would take more than 1GB RAM at this point
-################################################
 
-
-
-def concat_x_millions x
+def concat num
   val = ""
-  (1000000*x).times do |i|
+  num.times do |i|
     val.concat(i.to_s)
   end
+  val
 end
-################################################
-# $> time ruby test.rb;time ruby test.rb;time ruby test.rb;time ruby test.rb;
-# ruby test.rb  0,44s user 0,01s system 98% cpu 0,459 total
-# ruby test.rb  0,46s user 0,01s system 99% cpu 0,476 total
-# ruby test.rb  0,44s user 0,01s system 99% cpu 0,456 total
-# ruby test.rb  0,44s user 0,01s system 99% cpu 0,454 total
-################################################
 
-def concat_x_millions x
+def arrows num
   val = ""
-  (1000000*x).times do |i|
+  num.times do |i|
     val << i.to_s
   end
+  val
+end
+
+num = 50000
+Benchmark.bmbm(11) do |x|
+  x.report("plus:") {plus num}
+  x.report("concat:") {concat num}
+  x.report("arrows:") {arrows num}
 end
 ################################################
-# $> time ruby test.rb;time ruby test.rb;time ruby test.rb;time ruby test.rb;
-# ruby test.rb  0,42s user 0,01s system 99% cpu 0,437 total
-# ruby test.rb  0,43s user 0,01s system 99% cpu 0,448 total
-# ruby test.rb  0,40s user 0,01s system 99% cpu 0,417 total
-# ruby test.rb  0,40s user 0,01s system 98% cpu 0,420 total
+# $> ruby fast_string_concatenation.rb
+# Rehearsal -----------------------------------------------
+# plus:         1.250000   1.910000   3.160000 (  3.160035)
+# concat:       0.020000   0.000000   0.020000 (  0.020662)
+# arrows:       0.010000   0.000000   0.010000 (  0.018061)
+# -------------------------------------- total: 3.190000sec
+#
+#                   user     system      total        real
+# plus:         1.240000   1.890000   3.130000 (  3.139633)
+# concat:       0.020000   0.000000   0.020000 (  0.018018)
+# arrows:       0.020000   0.000000   0.020000 (  0.017364)
 ################################################
-
-
-concat_x_millions 1
