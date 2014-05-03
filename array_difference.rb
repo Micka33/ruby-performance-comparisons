@@ -38,7 +38,6 @@ end
 
 a1 = (0..50000).to_a
 a2 = (0..49999).to_a
-
 Benchmark.bmbm(11) do |x|
   x.report("compare_1:") {compare_1(a1, a2)}
   x.report("compare_2:") {compare_2(a1, a2)}
