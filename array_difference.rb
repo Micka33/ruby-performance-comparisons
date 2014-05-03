@@ -33,7 +33,7 @@ def compare_3 arr_1, arr_2
   arr_1.reject { |e| temp.include? e }
 end
 
-def natif arr_1, arr_2
+def native arr_1, arr_2
   arr_1 - arr_2
 end
 
@@ -46,7 +46,7 @@ Benchmark.bmbm(11) do |x|
   x.report("compare_1:") {compare_1(a1, a2)}
   x.report("compare_2:") {compare_2(a1, a2)}
   x.report("compare_3:") {compare_3(a1, a2)}
-  x.report("natif:")     {natif(a1, a2)}
+  x.report("native:")     {native(a1, a2)}
 end
 ################################################
 # $> ruby array_difference.rb
